@@ -47,7 +47,7 @@ aging_gui/
 ├── test_model.py          # Standalone sanity check (run before the GUI)
 ├── requirements.txt
 ├── pretrained_model/
-│   └── state_dict.pth   # Model checkpoint (not included — see below)
+│   └── state_dict.pth   # Model checkpoint (included, ~11MB)
 └── README.md
 ```
 
@@ -55,9 +55,12 @@ aging_gui/
 
 ### 1. Clone the repo
 
+The checkpoint is included, so this is a self-contained clone — no separate
+downloads needed.
+
 ```bash
 git clone https://github.com/hunar-ch/age-progression-model
-cd aging_gui
+cd age-progression-model
 ```
 
 ### 2. Create a virtual environment and install dependencies
@@ -68,18 +71,19 @@ source .venv/bin/activate        # on Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 3. Add the model checkpoint
+### 3. Model checkpoint
 
-Place your trained generator checkpoint at:
+The trained generator checkpoint is already included at:
 
 ```
 pretrained_model/state_dict.pth
 ```
 
-The checkpoint must match the architecture in `models.py`:
-`Generator(ngf=32, n_residual_blocks=9)`. If you're using a checkpoint
-trained with different hyperparameters, update the `load_model()` call in
-`model_utils.py` to match.
+No download needed — it's committed directly in this repo (~11MB, well
+under GitHub's file size limits). It matches the architecture in
+`models.py`: `Generator(ngf=32, n_residual_blocks=9)`. If you swap in a
+checkpoint trained with different hyperparameters, update the `load_model()`
+call in `model_utils.py` to match.
 
 ### 4. (Recommended) Run the sanity check first
 
@@ -116,6 +120,6 @@ in your browser.
 
 ## License
 
-Some architecture is reused from
+The `models.py` architecture is reused from
 [HasnainRaz/Fast-AgingGAN](https://github.com/HasnainRaz/Fast-AgingGAN)
 (MIT License).
