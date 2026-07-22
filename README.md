@@ -39,7 +39,7 @@ that change by a different **alpha**:
 ## Project structure
 
 ```
-aging_gui/
+age-progression-model/
 ├── app.py              # Gradio app (entrypoint)
 ├── model_utils.py       # Model loading + cached inference logic
 ├── metrics_utils.py      # PSNR / SSIM / FaceNet identity similarity
@@ -54,9 +54,6 @@ aging_gui/
 ## Setup
 
 ### 1. Clone the repo
-
-The checkpoint is included, so this is a self-contained clone — no separate
-downloads needed.
 
 ```bash
 git clone https://github.com/hunar-ch/age-progression-model
@@ -79,13 +76,12 @@ The trained generator checkpoint is already included at:
 pretrained_model/state_dict.pth
 ```
 
-No download needed — it's committed directly in this repo (~11MB, well
-under GitHub's file size limits). It matches the architecture in
+It matches the architecture in 
 `models.py`: `Generator(ngf=32, n_residual_blocks=9)`. If you swap in a
 checkpoint trained with different hyperparameters, update the `load_model()`
 call in `model_utils.py` to match.
 
-### 4. (Recommended) Run the sanity check first
+### 4. Test the model before launching
 
 Before launching the GUI, confirm the model loads correctly and that the age
 direction actually looks right (younger on the left, older on the right):
@@ -102,7 +98,7 @@ This saves a comparison grid to `test_output.png` and also displays it.
 python app.py
 ```
 
-Gradio will print a local URL (typically `http://127.0.0.1:7860`) — open it
+Gradio will print a local URL, open it
 in your browser.
 
 ## Notes
@@ -120,6 +116,6 @@ in your browser.
 
 ## License
 
-The `models.py` architecture is reused from
+Some architecture is reused from
 [HasnainRaz/Fast-AgingGAN](https://github.com/HasnainRaz/Fast-AgingGAN)
 (MIT License).
