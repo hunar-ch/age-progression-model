@@ -131,6 +131,17 @@ def generate(image: Image.Image, alpha: float) -> Image.Image:
     Apply the cached aging residual scaled by `alpha` to `image`.
     Runs the network only if the image isn't already cached.
     """
+    orig_np, current_np = get_arrays(image, alpha)
+    current_uint8 = (current_np * 255).astype(np.uint8)
+    return Image.fromarray(current_uint8)
+
+
+def get_arrays(image: Image.Image, alpha: float):
+    """
+    Same caching as generate(), but returns the raw (orig_np, current_np)
+    float arrays in [0, 1] instead of a PIL image. Used by metrics_utils so
+    metrics don't require a second network forward pass.
+    """
     key = _image_key(image)
 
     if _cache["key"] != key:
@@ -143,8 +154,7 @@ def generate(image: Image.Image, alpha: float) -> Image.Image:
         residual = _cache["residual"]
 
     current_np = np.clip(orig_np + alpha * residual, 0.0, 1.0)
-    current_uint8 = (current_np * 255).astype(np.uint8)
-    return Image.fromarray(current_uint8)
+    return orig_np, current_np
 
 
 def generate_all_steps(image: Image.Image) -> dict:
