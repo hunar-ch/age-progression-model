@@ -55,8 +55,13 @@ def on_generate_all(image):
 
 
 CUSTOM_CSS = """
-.gradio-image img {
+.match-size {
     padding: 0 !important;
+}
+.match-size img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
 }
 .metrics-table table {
     margin-left: auto;
@@ -79,10 +84,10 @@ with gr.Blocks(title="Face Age Progression", css=CUSTOM_CSS) as demo:
         with gr.Row():
             with gr.Column(scale=1):
                 gr.Markdown("**Upload a face photo**")
-                inp = gr.Image(type="pil", label="Upload a face photo", show_label=False, height=512, container=False)
+                inp = gr.Image(type="pil", label="Upload a face photo", show_label=False, height=384, elem_classes="match-size")
             with gr.Column(scale=1):
                 gr.Markdown("**Result**")
-                out = gr.Image(label="Result", show_label=False, height=512, container=False)
+                out = gr.Image(label="Result", show_label=False, height=384, elem_classes="match-size")
 
         with gr.Row():
             with gr.Column(scale=1):
@@ -106,7 +111,7 @@ with gr.Blocks(title="Face Age Progression", css=CUSTOM_CSS) as demo:
 
     with gr.Tab("All steps"):
         with gr.Row():
-            gallery_inp = gr.Image(type="pil", label="Upload a face photo")
+            gallery_inp = gr.Image(type="pil", label="Upload a face photo", height=200)
         gallery_btn = gr.Button("Generate all 6 steps", variant="primary")
 
         step_images = []
